@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -107,7 +111,6 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
         provinceListView = findViewById(R.id.province_list_view);
         provinceListView.setAdapter(provinceListAdapter = new ProvinceListAdapter());
-
         databaseListView = findViewById(R.id.database_list_view);
         databaseListView.setAdapter(databaseListAdapter = new DatabaseListAdapter());
 
@@ -126,8 +129,17 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         searchBtn.setOnClickListener(click -> {
             String countryIn = countryInput.getText().toString();
             String dateIn = dateInput.getText().toString();
-            saveArguments(countryIn, dateIn);
-            loadProvinceList(countryIn, dateIn);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date searchdate = format.parse ( dateIn );
+                saveArguments(countryIn, dateIn);
+                AquireData(countryIn, searchdate);
+                provinceListAdapter.notifyDataSetChanged();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            //ProvincesQuery provincesQuery = new ProvincesQuery();
+            //provincesQuery.execute("https://api.covid19api.com/country/CANADA/status/confirmed/live?from=2020-10-14T00:00:00Z&to=2020-10-15T00:00:00Z");
         });
 
         //function of save button
@@ -166,14 +178,16 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
     /*
         parse and convert date
      */
-    private void loadProvinceList(String country, String date) {
+    private void AquireData(String country, Date date) {
         provinceList.clear();
         progressBar.setVisibility(View.VISIBLE);
-
         ProvincesQuery provincesQuery = new ProvincesQuery();
-
-        String datePlusOne = date.substring(0, 8) + (Integer.parseInt( date.substring(8, 10) ) + 1) + "" ;
-        provincesQuery.execute(String.format("https://api.covid19api.com/country/%s/status/confirmed/live?from=%sT00:00:00Z&to=%sT00:00:00Z", country, date, datePlusOne));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateplusone=new Date(date.getTime() + (1000 * 60 * 60 * 24));
+        String searchdate= DateFormat.format("yyyy-MM-dd", date).toString();
+        String searchdateplusone= DateFormat.format("yyyy-MM-dd", dateplusone).toString();
+        String url="https://api.covid19api.com/country/"+country.toUpperCase()+"/status/confirmed/live?from="+searchdate+"T00:00:00Z&to="+searchdateplusone+"T00:00:00Z";
+        provincesQuery.execute(url);
     }
 
 
@@ -323,7 +337,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
     }
 
-    private class DatabaseListAdapter extends BaseAdapter
+     class DatabaseListAdapter extends BaseAdapter
     {
         @Override
         public int getCount() {
@@ -382,12 +396,27 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
             //make a new row
             View rowView = inflater.inflate(R.layout.row_province_layout, parent, false);
+            if (position==0){
+                TextView provinceView = rowView.findViewById( R.id.province_name_text_view );
+                provinceView.setText("Provinces/States:");
 
-            TextView provinceView = rowView.findViewById( R.id.province_name_text_view );
-            provinceView.setText(province.getProvince());
+                TextView caseView = rowView.findViewById( R.id.province_case_text_view );
+                caseView.setText("Cases:");
+            }
+            else if (position==provinceList.size()-1){
+                TextView provinceView = rowView.findViewById( R.id.province_name_text_view );
+                provinceView.setText(null);
 
-            TextView caseView = rowView.findViewById( R.id.province_case_text_view );
-            caseView.setText( province.getCase() );
+                TextView caseView = rowView.findViewById( R.id.province_case_text_view );
+                caseView.setText(null);
+            }
+            else {
+                TextView provinceView = rowView.findViewById(R.id.province_name_text_view);
+                provinceView.setText(province.getProvince());
+
+                TextView caseView = rowView.findViewById(R.id.province_case_text_view);
+                caseView.setText(province.getCase());
+            }
 
             return rowView;
         }
@@ -425,11 +454,11 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                     sb.append(line + "\n");
                 }
                 String result = sb.toString(); //result is the whole string
-
+                //System.out.println(result);
 
                 // convert string to JSON: Look at slide 27:
                 JSONArray provinceJSONArray = new JSONArray(result);
-                JSONObject provinceJSONObject = new JSONObject();
+                JSONObject provinceJSONObject;
 
 
                 for (int i = 0; i < provinceJSONArray.length(); i++) {
@@ -455,7 +484,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                 Log.e("Search provinces", e.getMessage());
 
             }
-            return "Search Done";
+            return "Data Acquisition done";
         }
 
         public void onPostExecute(String fromDoInBackground) {
@@ -464,7 +493,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             if (provinceList.size() == 0) {
                 Toast.makeText(Covid19Case.this, "No case returned.", Toast.LENGTH_LONG).show();
             }
-            provinceListAdapter.notifyDataSetChanged();
+           // provinceListAdapter.notifyDataSetChanged();
         }
     }
 

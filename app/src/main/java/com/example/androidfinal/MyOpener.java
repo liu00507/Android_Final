@@ -33,13 +33,6 @@ public class MyOpener extends SQLiteOpenHelper {
                 + COL_CASE + " TEXT,"
                 + COL_DATE + " TEXT);");
 
-//        db.execSQL("CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                + COL_COUNTRY + " text,"
-//                + COL_REGION + " text,"
-//                + COL_CITY + " text,"
-//                + COL_LATITUDE + " text,"
-//                + COL_LONGITUDE + " text,"
-//                + COL_CURRENCY_NAME + " text);");
     }
 
     @Override

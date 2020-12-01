@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="3">
+    >
 
     <!--database record, show after clicking navigation item "record in Database"-->
     <TextView
@@ -14,7 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/covid_country"
-        android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:layout_weight="2"/>
     <TextView
@@ -22,10 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/covid_date"
-        android:textColor="#FFFFFF"
         android:textAlignment="center"
         android:textSize="20dp"
-        android:layout_weight="1"/>
+        android:layout_weight="2"/>
 
 
 </LinearLayout>

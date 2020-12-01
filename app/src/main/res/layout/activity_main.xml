@@ -23,29 +23,43 @@
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
                 android:text="@string/description" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/btn_to_TicketMaster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="@string/btn_to_TicketMaster" />
 
             <Button
                 android:id="@+id/btn_to_RecipeSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="@string/btn_to_RecipeSearch" />
-
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <Button
                 android:id="@+id/btn_to_Covid19Case"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="@string/btn_to_Covid19Case" />
 
             <Button
                 android:id="@+id/btn_to_AudioApi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:text="@string/btn_to_AudioApi" />
+        </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
