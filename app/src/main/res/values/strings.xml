@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Android Final</string>
     <string name="description">Android Group Project</string>
-    <string name="authors">Sam Liu, Zheng Huang, Qi Luo</string>
+    <string name="authors">Group x:Sam Liu, Zheng Huang, Chi Luo</string>
     <!--Strings in activity_covid19_case.xml-->
     <string name="covid_toast_message">Covid-19 Case Data Activity\nWritten by: Sam Liu Ver 1.0</string>
     <string name="btn_to_TicketMaster">Ticket Master</string>
     <string name="btn_to_RecipeSearch">Recipe Search</string>
     <string name="btn_to_AudioApi">Audio Database Api</string>
-    <string name="btn_to_Covid19Case">Covid-19 Case</string>
+    <string name="btn_to_Covid19Case">Covid-19 Cases</string>
 
-    <string name="covid_caseText">Covid-19 Case Data</string>
-    <string name="covid_search">Enter a country name and date for searching</string>
+    <string name="covid_activityTitle">Covid-19 Case Data</string>
+    <string name="covid_search">Enter a country name and date to search data</string>
     <string name="covid_country_hint">Country</string>
     <string name="covid_date_hint">Date</string>
 
