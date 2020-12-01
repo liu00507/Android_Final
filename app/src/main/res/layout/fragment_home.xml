@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.finalProject.receipeSearch.ui.home.HomeFragment">
+
+    <EditText
+        android:id="@+id/edittexthomesearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Receipe Name"
+        android:layout_alignParentTop="true"
+        android:padding="5dp"
+        />
+    <EditText
+        android:id="@+id/edittexthomesearching"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Ingredients Name"
+        android:padding="5dp"
+        android:layout_below="@+id/edittexthomesearch"
+        />
+    <Button
+        android:id="@+id/buttonhomesearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittexthomesearching"
+        android:text="Search"
+        android:padding="5dp"
+        />
+    <ListView
+        android:id="@+id/listviewhomelist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonhomesearch"
+        android:padding="5dp"
+        />
+
+</RelativeLayout>
