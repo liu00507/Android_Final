@@ -1,7 +1,5 @@
 package com.example.androidfinal;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -12,8 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.androidfinal.ReceipeModel;
-import com.example.androidfinal.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.receipeSearch.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -52,7 +51,7 @@ public class ReceipeDetail extends AppCompatActivity {
         // Get the shared prefrence editor
         sharedPreferences= PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
         // Fetch the list in string
         String connectionsJSONString = sharedPreferences.getString(RECIEPE, null);
         if(connectionsJSONString!= null){
@@ -64,18 +63,18 @@ public class ReceipeDetail extends AppCompatActivity {
         // intialist the list of datamodel
 //        dataModels= new ArrayList<>();
         // Get the title from intent
-        String title = getIntent().getExtras().getString("title");
+        final String title = getIntent().getExtras().getString("title");
         // Get the ingredients from intent
-        String ingredients = getIntent().getExtras().getString("ingredients");
+        final String ingredients = getIntent().getExtras().getString("ingredients");
         // Get the href from intent
-        String href = getIntent().getExtras().getString("href");
+        final String href = getIntent().getExtras().getString("href");
         // Get the thumnail from intent
-        String thumnail = getIntent().getExtras().getString("thumnail");
+        final String thumnail = getIntent().getExtras().getString("thumnail");
         // Check if image is present
         if(thumnail.length() > 0){
             // Show image
             ImageView ivBasicImage = (ImageView) findViewById(R.id.imageviewdetail);
-            Picasso.with(getApplicationContext()).load(thumnail).into(ivBasicImage);
+            Picasso.get().load(thumnail).into(ivBasicImage);
         }
         // If there is favourites check for it
         if(connectionsJSONString != null) {

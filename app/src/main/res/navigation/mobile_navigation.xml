@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.finalProject.receipeSearch.ui.home.HomeFragment"
+        android:name="com.example.androidfinal.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.finalProject.receipeSearch.ui.fav.FavFragment"
+        android:name="com.example.androidfinal.FavFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 

@@ -20,8 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.receipeSearch.R;
-import com.example.finalProject.receipeSearch.ReceipeDetail;
-import com.example.finalProject.receipeSearch.model.ReceipeModel;
+import com.example.androidfinal.ReceipeDetail;
+import com.example.androidfinal.ReceipeModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

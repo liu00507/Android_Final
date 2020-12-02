@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <manifest package="com.example.androidfinal"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    <manifest package="com.example.receipeSearch" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
 
     <application android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.ReceipeSearch"
+        android:theme="@style/AppTheme"
         android:supportsRtl="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
@@ -17,12 +16,12 @@
     <activity android:name="com.example.androidfinal.ReceipeDetail"/>
 
 
-    -<activity android:name="com.example.androidfinal.MainActivity"
-        android:theme="@style/Theme.ReceipeSearch.NoActionBar"
-        android:label="@string/app_name">
+    <activity android:name="com.example.androidfinal.MainActivity"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    android:label="@string/app_name">
 
 
-    -<intent-filter>
+    <intent-filter>
 
     <action android:name="android.intent.action.MAIN"/>
 
