@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.finalProject.receipeSearch.ui.home.HomeFragment">
+    tools:context="com.example.androidfinal.HomeFragment">
 
     <EditText
         android:id="@+id/edittexthomesearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Receipe Name"
+        android:hint="@string/Edit_Text"
         android:layout_alignParentTop="true"
         android:padding="5dp"
         />
@@ -18,7 +18,7 @@
         android:id="@+id/edittexthomesearching"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Ingredients Name"
+        android:hint="@string/Edit_Text1"
         android:padding="5dp"
         android:layout_below="@+id/edittexthomesearch"
         />
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/edittexthomesearching"
-        android:text="Search"
+        android:text="@string/searchbutton"
         android:padding="5dp"
         />
     <ListView

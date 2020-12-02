@@ -74,13 +74,13 @@ public class ReceipeDetail extends AppCompatActivity {
         if(thumnail.length() > 0){
             // Show image
             ImageView ivBasicImage = (ImageView) findViewById(R.id.imageviewdetail);
-            Picasso.get().load(thumnail).into(ivBasicImage);
+            Picasso.get().load(thumnail).into(ivBasicImage); //Reference from w3school.com
         }
         // If there is favourites check for it
         if(connectionsJSONString != null) {
             Type type = new TypeToken<List<ReceipeModel>>() {
             }.getType();
-            List<ReceipeModel> connections = new Gson().fromJson(connectionsJSONString, type);
+            List<ReceipeModel> connections = new Gson().fromJson(connectionsJSONString, type); //Reference from w3school.com
             for (ReceipeModel con : connections) {
                 Log.d("Titles",con.getTitle());
                 if(con.getTitle().equals(title)){

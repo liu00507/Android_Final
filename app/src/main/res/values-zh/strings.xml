@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">菜单搜索</string>
+    <string name="navigation_drawer_open">打开导航抽屉</string>
+    <string name="navigation_drawer_close">关闭导航抽屉</string>
+    <string name="nav_header_title">食谱应用</string>
+    <string name="nav_header_subtitle">搜索你喜欢的食谱</string>
+    <string name="nav_header_desc">导航标题</string>
+    <string name="action_settings">设置</string>
+    <string name="action_help">帮助</string>
+
+    <string name="searchbutton">搜索</string>
+    <string name="buttonsave">保存</string>
+    <string name="Edit_Text">输入菜谱名</string>
+    <string name="Edit_Text1">输入原料名</string>
+    <string name="menu_home">主页</string>
+    <string name="menu_gallery">收藏夹</string>
+
+</resources>
