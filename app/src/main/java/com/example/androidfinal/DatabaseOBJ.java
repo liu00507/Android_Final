@@ -1,16 +1,16 @@
 package com.example.androidfinal;
 
-public class Database {
+public class DatabaseOBJ {
     private String country;
     private String date;
     private long id;
 
     //constructor
-    public Database()
+    public DatabaseOBJ()
     {
     }
 
-    public Database(String country, String date )
+    public DatabaseOBJ(String country, String date )
     {
         this.country = country;
         this.date = date;

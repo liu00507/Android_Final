@@ -21,7 +21,7 @@ public class ProvinceDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_province_detail);
-
+        //get all the date from intent
         Intent fromIntent = getIntent();
         latitude = fromIntent.getStringExtra("Lat");
         longitude = fromIntent.getStringExtra("Lon");
@@ -32,6 +32,7 @@ public class ProvinceDetailActivity extends AppCompatActivity {
         date = fromIntent.getStringExtra("Date");
         id = fromIntent.getLongExtra("id", -1);
 
+        //find all the views
         TextView countryTextView = findViewById(R.id.country_text_view);
         TextView countryCodeTextView = findViewById(R.id.countrycode_text_view);
         TextView provinceTextView = findViewById(R.id.province_text_view);
@@ -40,6 +41,7 @@ public class ProvinceDetailActivity extends AppCompatActivity {
         TextView latitudeTextView = findViewById(R.id.latitude_text_view);
         TextView longitudeTextView = findViewById(R.id.longitude_text_view);
 
+        //set text and display
         countryTextView.setText(country);
         countryCodeTextView.setText(countryCode);
         provinceTextView.setText(provinceName);

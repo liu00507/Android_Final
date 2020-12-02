@@ -46,19 +46,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import androidx.annotation.NonNull;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import com.example.androidfinal.MainActivity;
+
 
 public class Covid19Case extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 
     private SharedPreferences prefs;
-
+    public static final String ACTIVITY_NAME = "Covid19Case";
     private List<Province> provinceList = new ArrayList<>();
-    private List<Database> databaseList = new ArrayList<>();
+    private List<DatabaseOBJ> databaseList = new ArrayList<>();
 
     ListView provinceListView = null;
     ListView databaseListView = null;
@@ -129,16 +129,10 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         searchBtn.setOnClickListener(click -> {
             String countryIn = countryInput.getText().toString();
             String dateIn = dateInput.getText().toString();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date searchdate = format.parse ( dateIn );
                 saveArguments(countryIn, dateIn);
-                AquireData(countryIn, searchdate);
+                AquireData(countryIn, dateIn);
                 provinceListAdapter.notifyDataSetChanged();
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            //ProvincesQuery provincesQuery = new ProvincesQuery();
+            //ProvincesQuery provincesQuery = new ProvincesQuery();//testing
             //provincesQuery.execute("https://api.covid19api.com/country/CANADA/status/confirmed/live?from=2020-10-14T00:00:00Z&to=2020-10-15T00:00:00Z");
         });
 
@@ -178,15 +172,11 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
     /*
         parse and convert date
      */
-    private void AquireData(String country, Date date) {
+    private void AquireData(String country, String date) {
         provinceList.clear();
         progressBar.setVisibility(View.VISIBLE);
         ProvincesQuery provincesQuery = new ProvincesQuery();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateplusone=new Date(date.getTime() + (1000 * 60 * 60 * 24));
-        String searchdate= DateFormat.format("yyyy-MM-dd", date).toString();
-        String searchdateplusone= DateFormat.format("yyyy-MM-dd", dateplusone).toString();
-        String url="https://api.covid19api.com/country/"+country.toUpperCase()+"/status/confirmed/live?from="+searchdate+"T00:00:00Z&to="+searchdateplusone+"T00:00:00Z";
+        String url="https://api.covid19api.com/country/"+country.toUpperCase()+"/status/confirmed/live?from="+date+"T00:00:00Z&to="+date+"T23:59:59Z";
         provincesQuery.execute(url);
     }
 
@@ -213,11 +203,11 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                 break;
             case R.id.item2: //show saved results in database
                 //call loadDataFromDatabase()
+                loadDataFromDatabase();
                 message = "Show records saved in database";
                 break;
             case R.id.item3: //show user manual
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
                 alertDialogBuilder.setTitle(R.string.covid_help_text)
                         .setMessage(R.string.covid_help_content)
                         .setPositiveButton(R.string.covid_yes, (c, arg) -> {
@@ -226,8 +216,8 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                         .create().show();
                 message = "show user manual";
                 break;
-            case R.id.item4: //about the covid19 topic
-                message = "Covid-19 case data writen by Ivy Xue";
+            case R.id.item4:
+                message = "Covid-19 case data By Sam Liu";
                 break;
 
         }
@@ -239,14 +229,14 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
      *the OnNavigationItemSelected interface
      */
     @Override
-    public boolean onNavigationItemSelected( MenuItem item) {
+    public boolean onNavigationItemSelected(MenuItem item) {
         String message = null;
         switch(item.getItemId())
         {
             case R.id.item1:
                 //Go to Main Page
                 startActivity(new Intent(Covid19Case.this, MainActivity.class));
-                message = "Show main page";
+                message = "Go back to main page";
                 break;
             case R.id.item2:
                 //show saved records in Database: country and date
@@ -262,10 +252,10 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
                         })
                         .create().show();
-                message = "Show User Manual";
+                message = "Show Help";
                 break;
             case R.id.item4:
-                message = "Covid-19 activity";
+                message = "Covid-19 Case Data";
                 break;
 
         }
@@ -287,12 +277,12 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         {
             //add to the database and get the new ID
             ContentValues newRowValues = new ContentValues();
-
+            String date=result.getDate().split("T")[0];
             //Now provide a value for every database column defined in ProvinceOpener.java:
             //put string country in the COUNTRY column:
             newRowValues.put( MyOpener.COL_COUNTRY, result.getCountry() );
             //put string date in the DATE column:
-            newRowValues.put( MyOpener.COL_DATE, result.getDate() );
+            newRowValues.put( MyOpener.COL_DATE, date);
             //put string province in the PROVINCE column:
             newRowValues.put( MyOpener.COL_PROVINCE, result.getProvince() );
             //put string case in the CASE column:
@@ -300,6 +290,31 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
             //Now insert in the database:
             long newId = db.insert( MyOpener.TABLE_NAME, null, newRowValues );
+        }
+
+
+    }
+
+    private void printCursor(Cursor c, int version){
+        System.out.println("DB version: "+db.getVersion());
+        System.out.println("Total columns" + 	c.getColumnCount());
+        System.out.println("Column names are: "+c.getColumnName(0)+" "+c.getColumnName(1)+" "+c.getColumnName(2));
+        System.out.println("Total rows"+c.getCount());
+        Log.e(ACTIVITY_NAME,"DB version: "+db.getVersion());
+        Log.e(ACTIVITY_NAME,"Total columns: " + c.getColumnCount());
+        Log.e(ACTIVITY_NAME,"Column names are: "+c.getColumnName(0)+" "+c.getColumnName(1)+" "+c.getColumnName(2));
+        Log.e(ACTIVITY_NAME,"Total rows: "+c.getCount());
+        int MsgColumnIndex = c.getColumnIndex(MyOpener.COL_COUNTRY);
+        int TypeColIndex = c.getColumnIndex(MyOpener.COL_CASE);
+        int idColIndex = c.getColumnIndex(MyOpener.COL_ID);
+        while(c.moveToNext())
+        {
+            String message = c.getString(MsgColumnIndex);
+            int type = c.getInt(TypeColIndex);
+            long id = c.getLong(idColIndex);
+            Log.e(ACTIVITY_NAME,"Message: "+message);
+            Log.e(ACTIVITY_NAME,"Type: "+type);
+            Log.e(ACTIVITY_NAME,"Id: "+id);
         }
     }
     /*
@@ -312,32 +327,29 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         MyOpener dbOpener = new MyOpener(this);
         db = dbOpener.getWritableDatabase();
 
-        // We want to get distincet country column and date column.
         String [] columns = {MyOpener.COL_COUNTRY, MyOpener.COL_DATE};
         //query country and date from the database:
-        Cursor results = db.query(true, MyOpener.TABLE_NAME, new String[]{"COUNTRY", "DATE"}, "COUNTRY not null and DATE not null", null,null, null, null, null);
+        Cursor results = db.query(true, MyOpener.TABLE_NAME, columns, "COUNTRY not null and DATE not null", null,null, null, null, null);
 
         //Now the results object has rows of results that match the query.
         //find the column indices:
         int countryColumnIndex = results.getColumnIndex(MyOpener.COL_COUNTRY);
         int dateColumnIndex = results.getColumnIndex(MyOpener.COL_DATE);
-
+        //printCursor(results,MyOpener.VERSION_NUM);
         //iterate over the results, return true if there is a next item:
         while(results.moveToNext())
         {
             String country = results.getString(countryColumnIndex);
             String date = results.getString(dateColumnIndex);
             //add the new Contact to the array list:
-            databaseList.add( new Database( country, date ) );
+            databaseList.add( new DatabaseOBJ( country, date ) );
         }
 
-//        provinceListView.setVisibility( View.INVISIBLE );
-//        databaseListView.setVisibility( View.VISIBLE );
         databaseListAdapter.notifyDataSetChanged();
 
     }
 
-     class DatabaseListAdapter extends BaseAdapter
+     private class DatabaseListAdapter extends BaseAdapter
     {
         @Override
         public int getCount() {
@@ -345,9 +357,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         }
 
         @Override
-        public Object getItem(int position) {
-            return databaseList.get(position);
-        }
+        public Object getItem(int position) { return databaseList.get(position); }
 
         @Override
         public long getItemId(int position) {
@@ -356,18 +366,14 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Database databaseRec = (Database) getItem(position);
-            LayoutInflater inflater = getLayoutInflater();
-
+            DatabaseOBJ databaseRec = (DatabaseOBJ) getItem(position);
+            LayoutInflater inflater2 = getLayoutInflater();
             //make a new row
-            View rowView = inflater.inflate(R.layout.row_countrydate_layout, parent, false);
-
+            View rowView = inflater2.inflate(R.layout.row_countrydate_layout, parent, false);
             TextView countryView = rowView.findViewById( R.id.country_name_text_view);
             countryView.setText(databaseRec.getCountry());
-
             TextView dateView = rowView.findViewById( R.id.date_text_view );
-            dateView.setText( databaseRec.getDate() );
-
+            dateView.setText(databaseRec.getDate());
             return rowView;
         }
     }
@@ -396,28 +402,10 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
             //make a new row
             View rowView = inflater.inflate(R.layout.row_province_layout, parent, false);
-            if (position==0){
-                TextView provinceView = rowView.findViewById( R.id.province_name_text_view );
-                provinceView.setText("Provinces/States:");
-
-                TextView caseView = rowView.findViewById( R.id.province_case_text_view );
-                caseView.setText("Cases:");
-            }
-            else if (position==provinceList.size()-1){
-                TextView provinceView = rowView.findViewById( R.id.province_name_text_view );
-                provinceView.setText(null);
-
-                TextView caseView = rowView.findViewById( R.id.province_case_text_view );
-                caseView.setText(null);
-            }
-            else {
                 TextView provinceView = rowView.findViewById(R.id.province_name_text_view);
                 provinceView.setText(province.getProvince());
-
                 TextView caseView = rowView.findViewById(R.id.province_case_text_view);
                 caseView.setText(province.getCase());
-            }
-
             return rowView;
         }
     }
@@ -464,6 +452,10 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                 for (int i = 0; i < provinceJSONArray.length(); i++) {
                     provinceJSONObject = provinceJSONArray.getJSONObject(i);
                     Province province = new Province();
+                    if(provinceJSONObject.getString("Province").equals("")){
+                        continue;
+                    }
+                    else{
                     province.setProvince(provinceJSONObject.getString("Province"));
                     province.setCountry(provinceJSONObject.getString("Country"));
                     province.setCase(provinceJSONObject.getString("Cases"));
@@ -471,10 +463,10 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                     province.setDate(provinceJSONObject.getString("Date"));
                     province.setLatitude(provinceJSONObject.getString("Lat"));
                     province.setLongitude(provinceJSONObject.getString("Lon"));
-
                     provinceResults.add(province);
                     publishProgress(i * (100 / provinceJSONArray.length()));
                     progressBar.setProgress(i * (100 / provinceJSONArray.length()));
+                    }
                 }
                 publishProgress(100);
                 progressBar.setProgress(100);

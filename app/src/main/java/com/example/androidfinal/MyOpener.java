@@ -19,20 +19,15 @@ public class MyOpener extends SQLiteOpenHelper {
     /*
         constructor
      */
-    public MyOpener(Context ctx) {
-
-        super(ctx, DATABASE_NAME, null, VERSION_NUM);
-
-    }
+    public MyOpener(Context ctx) { super(ctx, DATABASE_NAME, null, VERSION_NUM); }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " ("+COL_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_COUNTRY + " TEXT,"
                 + COL_PROVINCE + " TEXT,"
                 + COL_CASE + " TEXT,"
                 + COL_DATE + " TEXT);");
-
     }
 
     @Override
