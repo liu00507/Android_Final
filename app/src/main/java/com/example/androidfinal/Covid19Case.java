@@ -345,7 +345,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             databaseList.add( new DatabaseOBJ( country, date ) );
         }
 
-        ((BaseAdapter)((ListView)findViewById(R.id.database_list_view)).getAdapter()).notifyDataSetChanged();
+        databaseListAdapter.notifyDataSetChanged();
 
     }
 
