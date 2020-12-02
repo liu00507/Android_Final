@@ -13,6 +13,10 @@ public class Province {
 
     public Province() {
     }
+    public Province(String province, String casenumber){
+        this.province=province;
+        this.casenumber=casenumber;
+    }
 
     public String getCountryCode() {
         return countrycode;

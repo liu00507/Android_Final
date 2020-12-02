@@ -1,6 +1,5 @@
 package com.example.androidfinal;
 
-import androidx.annotation.ContentView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -16,7 +15,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.androidfinal.R;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -40,10 +37,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -151,13 +145,17 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         provinceListView.setOnItemClickListener((parent, view, position, id) -> {
             Province province = provinceList.get(position);
             gotoProvinceDetail.putExtra("Country", province.getCountry());
-            gotoProvinceDetail.putExtra("CountryCode", province.getCountryCode());
-            gotoProvinceDetail.putExtra("Province", province.getProvince() );
-            gotoProvinceDetail.putExtra("Cases", province.getCase());
             gotoProvinceDetail.putExtra("Date", province.getDate());
+            gotoProvinceDetail.putExtra("Cases", province.getCase());
             gotoProvinceDetail.putExtra("Lat", province.getLatitude());
             gotoProvinceDetail.putExtra("Lon", province.getLongitude());
+            gotoProvinceDetail.putExtra("Province", province.getProvince() );
+            gotoProvinceDetail.putExtra("CountryCode", province.getCountryCode());
             startActivity(gotoProvinceDetail);
+        });
+
+        databaseListView.setOnItemClickListener((parent, view, position, id) -> {
+            getAllDataFromDatabase(databaseList.get(position));
         });
 
     }
@@ -198,7 +196,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         {
             //what to do when the menu item is selected:
             case R.id.item1: //Go to Main page
-                startActivity(new Intent(Covid19Case.this, MainActivity.class));
+                startActivity(new Intent(Covid19Case.this, MainMenu.class));
                 message = "Go to Main Page";
                 break;
             case R.id.item2: //show saved results in database
@@ -235,7 +233,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         {
             case R.id.item1:
                 //Go to Main Page
-                startActivity(new Intent(Covid19Case.this, MainActivity.class));
+                startActivity(new Intent(Covid19Case.this, MainMenu.class));
                 message = "Go back to main page";
                 break;
             case R.id.item2:
@@ -292,7 +290,6 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             long newId = db.insert( MyOpener.TABLE_NAME, null, newRowValues );
         }
 
-
     }
 
     private void printCursor(Cursor c, int version){
@@ -316,6 +313,24 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             Log.e(ACTIVITY_NAME,"Type: "+type);
             Log.e(ACTIVITY_NAME,"Id: "+id);
         }
+    }
+    private void getAllDataFromDatabase(DatabaseOBJ database){
+        provinceList.clear();
+        MyOpener dbOpener = new MyOpener(this);
+        db = dbOpener.getWritableDatabase();
+        String [] columns = {MyOpener.COL_COUNTRY,MyOpener.COL_DATE, MyOpener.COL_PROVINCE, MyOpener.COL_CASE};
+        String[] args = {database.getCountry(), database.getDate()};
+        Cursor results = db.query(false, MyOpener.TABLE_NAME, columns, MyOpener.COL_COUNTRY + "=?" + " and "  +
+                MyOpener.COL_DATE + "=?", args,null, null, null, null);
+        int provincesColumnIndex = results.getColumnIndex(MyOpener.COL_PROVINCE);
+        int caseColumnIndex = results.getColumnIndex(MyOpener.COL_CASE);
+        while(results.moveToNext())
+        {
+            String provinces= results.getString(provincesColumnIndex);
+            String cases=results.getString(caseColumnIndex);
+            provinceList.add(new Province(provinces,cases));
+        }
+        provinceListAdapter.notifyDataSetChanged();
     }
     /*
      * load country & date from Database, show in listview
