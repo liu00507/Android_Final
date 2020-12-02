@@ -345,7 +345,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             databaseList.add( new DatabaseOBJ( country, date ) );
         }
 
-        databaseListAdapter.notifyDataSetChanged();
+        ((BaseAdapter)((ListView)findViewById(R.id.database_list_view)).getAdapter()).notifyDataSetChanged();
 
     }
 
@@ -366,14 +366,14 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            DatabaseOBJ databaseRec = (DatabaseOBJ) getItem(position);
-            LayoutInflater inflater2 = getLayoutInflater();
+            DatabaseOBJ database = (DatabaseOBJ) getItem(position);
+            LayoutInflater inflater = getLayoutInflater();
             //make a new row
-            View rowView = inflater2.inflate(R.layout.row_countrydate_layout, parent, false);
+            View rowView = inflater.inflate(R.layout.row_countrydate_layout, parent, false);
             TextView countryView = rowView.findViewById( R.id.country_name_text_view);
-            countryView.setText(databaseRec.getCountry());
+            countryView.setText(database.getCountry());
             TextView dateView = rowView.findViewById( R.id.date_text_view );
-            dateView.setText(databaseRec.getDate());
+            dateView.setText(database.getDate());
             return rowView;
         }
     }
