@@ -65,12 +65,13 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
     ProgressBar progressBar;
 
     Intent gotoProvinceDetail;
+    CovidDetailsFragment dFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_covid19_case);
-
+        boolean isTablet = findViewById(R.id.covidfragmentLocation) != null;
         /*
         put and set toolbar:
          */
@@ -144,14 +145,32 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
          */
         provinceListView.setOnItemClickListener((parent, view, position, id) -> {
             Province province = provinceList.get(position);
-            gotoProvinceDetail.putExtra("Country", province.getCountry());
-            gotoProvinceDetail.putExtra("Date", province.getDate());
-            gotoProvinceDetail.putExtra("Cases", province.getCase());
-            gotoProvinceDetail.putExtra("Lat", province.getLatitude());
-            gotoProvinceDetail.putExtra("Lon", province.getLongitude());
-            gotoProvinceDetail.putExtra("Province", province.getProvince() );
-            gotoProvinceDetail.putExtra("CountryCode", province.getCountryCode());
-            startActivity(gotoProvinceDetail);
+
+            dFragment = new CovidDetailsFragment();
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString("Country", province.getCountry());
+            dataToPass.putString("CountryCode", province.getCountryCode());
+            dataToPass.putString("Province", province.getProvince());
+            dataToPass.putString("Cases", province.getCase());
+            dataToPass.putString("Date", province.getDate());
+            dataToPass.putString("Lat", province.getLatitude());
+            dataToPass.putString("Lon", province.getLongitude());
+
+            if(isTablet)
+            {
+                //add a CovidDetialsFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.covidfragmentLocation, dFragment) //add fragment to frame layout
+                        .commit(); //load the fragment
+            }
+            else //is phone
+            {
+                Intent nextActivity = new Intent(Covid19Case.this, ProvinceDetailActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivity(nextActivity); //make the transition
+            }
         });
 
         databaseListView.setOnItemClickListener((parent, view, position, id) -> {

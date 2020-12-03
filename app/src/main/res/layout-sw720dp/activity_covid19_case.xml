@@ -38,16 +38,14 @@
                 android:id="@+id/covid_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_to_Covid19Case"
+                android:text="@string/covid_activityTitle"
                 android:textSize="20dp" />
-
 
             <TextView
                 android:id="@+id/covid_searchInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/covid_search"
-                android:textStyle="bold"
                 android:textSize="20dp" />
 
 
@@ -55,21 +53,20 @@
                 android:id="@+id/search_div"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/country_input"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:hint="@string/covid_country_hint"
-                    />
+                    android:layout_weight="2"
+                    android:hint="@string/covid_country_hint" />
 
                 <EditText
                     android:id="@+id/date_input"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="2"
                     android:hint="@string/covid_date_hint"
                     />
 
@@ -79,40 +76,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                >
+                android:weightSum="3">
 
                 <Button
                     android:id="@+id/search_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:text="@string/covid_search_btn" />
 
                 <Button
                     android:id="@+id/save_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:text="@string/covid_save_btn" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+
                 <ListView
-                    android:layout_weight="1"
                     android:id="@+id/province_list_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="650dp"
+                    android:layout_weight="1" />
+
                 <ListView
-                    android:layout_weight="2"
                     android:id="@+id/database_list_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="650dp"
+                    android:layout_weight="1" />
             </LinearLayout>
-
+            <FrameLayout
+                android:id="@+id/covidfragmentLocation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView
@@ -128,3 +130,4 @@
     </androidx.drawerlayout.widget.DrawerLayout>
 
 </LinearLayout>
+
