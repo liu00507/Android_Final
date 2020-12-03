@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
     // Application Bar Configuration Variable
     private AppBarConfiguration mAppBarConfiguration;
 
-
-
     // OnCreate Method For Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
