@@ -16,7 +16,7 @@
     <activity android:name="com.example.androidfinal.ReceipeDetail"/>
 
 
-    <activity android:name="com.example.androidfinal.MainActivity"
+    <activity android:name="com.example.androidfinal.MainActivityReceipe"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     android:label="@string/app_name">
 
