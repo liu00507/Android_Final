@@ -127,8 +127,6 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                 saveArguments(countryIn, dateIn);
                 AquireData(countryIn, dateIn);
                 provinceListAdapter.notifyDataSetChanged();
-            //ProvincesQuery provincesQuery = new ProvincesQuery();//testing
-            //provincesQuery.execute("https://api.covid19api.com/country/CANADA/status/confirmed/live?from=2020-10-14T00:00:00Z&to=2020-10-15T00:00:00Z");
         });
 
         //function of save button
@@ -177,6 +175,21 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             getAllDataFromDatabase(databaseList.get(position));
         });
 
+        databaseListView.setOnItemLongClickListener((p,b,pos,id)->{
+            AlertDialog.Builder alert=new AlertDialog.Builder(this);
+            alert.setTitle("Do you want to delete this?").setMessage("The selected row is "+pos+" and The database id id: "+id)
+                    .setPositiveButton("Yes",(click,arg)->{
+                        deleteMessage(databaseList.get(pos));
+                        databaseList.remove(pos);
+                        databaseListAdapter.notifyDataSetChanged();
+                    }).setNegativeButton("No",(click,arg)->{}).create().show();
+            return true;
+        });
+    }
+    protected void deleteMessage(DatabaseOBJ c)
+    {
+        db.delete(MyOpener.TABLE_NAME, MyOpener.COL_COUNTRY + "=?" + " and "  +
+                MyOpener.COL_DATE + "=?", new String[] {c.getCountry(),c.getDate()});
     }
 
     private void saveArguments(String country, String date) {
@@ -234,7 +247,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                 message = "show user manual";
                 break;
             case R.id.item4:
-                message = "Covid-19 case data By Sam Liu";
+                message = "Covid-19 case data By Sam Liu 040984702";
                 break;
 
         }
