@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">安卓期末程序</string>
+    <string name="description">安卓期末小组程序</string>
+    <string name="authors">Group x:Sam Liu, Zheng Huang, Chi Luo</string>
+    <!--Strings in activity_covid19_case.xml-->
+    <string name="covid_toast_message">Covid-19 病例数据\n作者: Sam Liu Ver 1.0</string>
+    <string name="btn_to_TicketMaster">票务大师</string>
+    <string name="btn_to_RecipeSearch">食谱搜索</string>
+    <string name="btn_to_AudioApi">声音数据库api</string>
+    <string name="btn_to_Covid19Case">Covid-19 病例</string>
 
+    <string name="covid_activityTitle">Covid-19 病例数据</string>
+    <string name="covid_search">输入国家与日期搜索</string>
+    <string name="covid_country_hint">国家</string>
+    <string name="covid_date_hint">日期</string>
+
+    <string name="covid_search_btn">搜索</string>
+    <string name="covid_save_btn">保存</string>
+    <string name="covid_help_text">帮助</string>
+    <string name="covid_help_content">请输入英文国家名和日期 YYYY-MM-DD格式 然后点击搜索</string>
+    <string name="covid_yes">是</string>
+
+    <string name="covidopen">打开</string>
+    <string name="covidclose">关闭</string>
+
+    <!--strings in activity_province_detail.xml-->
+    <string name="covid_country">国家: </string>
+    <string name="covid_countryCode">国家代码: </string>
+    <string name="covid_province">省份: </string>
+    <string name="covid_case">病例数: </string>
+    <string name="covid_date">日期: </string>
+    <string name="covid_latitude">经度: </string>
+    <string name="covid_longitude">维度: </string>
+
+    <!--strings in covid_menu.xml-->
+    <string name="choice1">回主菜单 </string>
+    <string name="choice2">数据库数据 </string>
+    <string name="choice3">帮助 </string>
+    <string name="choice4">关于 </string>
+
+    <!--strings in header_covid.xml-->
+    <string name="covidtitle">界面: Covid-19 病例数据</string>
+    <string name="covidauthor">作者: Sam Liu</string>
+    <string name="covidversion">版本 1.0 </string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">菜谱程序</string>
+    <string name="nav_header_subtitle">搜你喜欢的东西</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">设置</string>
+    <string name="action_help">帮助</string>
+    <string name="searchbutton">搜索</string>
+    <string name="buttonsave">保存</string>
+    <string name="Edit_Text">输入菜谱名称</string>
+    <string name="Edit_Text1">输入食材名称</string>
+    <string name="receipe_toast_message">菜谱搜索程序\n作者: Huang Zheng Ver 1.0</string>
+
+    <string name="menu_home">主界面</string>
+    <string name="menu_gallery">已保存的菜谱</string>
 
 </resources>
