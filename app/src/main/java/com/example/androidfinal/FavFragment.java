@@ -19,9 +19,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.androidfinal.ReceipeDetail;
 import com.example.androidfinal.ReceipeModel;
-import com.example.receipeSearch.R;
-import com.google.gson.Gson; //Reference from w3school.com
-import com.google.gson.reflect.TypeToken; //Reference from w3school.com
+import com.example.androidfinal.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -92,8 +92,8 @@ public class FavFragment extends Fragment {
         // Check if string is not null
         if(connectionsJSONString!= null){
             // Creation of list from string
-            Type type = new TypeToken< List < ReceipeModel >>() {}.getType(); //Reference from w3school.com
-            List < ReceipeModel > connections = new Gson().fromJson(connectionsJSONString, type); //Reference from w3school.com
+            Type type = new TypeToken< List < ReceipeModel >>() {}.getType();
+            List < ReceipeModel > connections = new Gson().fromJson(connectionsJSONString, type);
             // Add title to list for showing in fav list
             for(ReceipeModel con : connections){
                 str.add(con.getTitle());

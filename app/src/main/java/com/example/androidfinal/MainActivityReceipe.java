@@ -1,14 +1,13 @@
 package com.example.androidfinal;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.example.receipeSearch.R;
+import com.example.androidfinal.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -22,7 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityReceipe extends AppCompatActivity {
 
     // Application Bar Configuration Variable
     private AppBarConfiguration mAppBarConfiguration;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_receipe);
         // toolbar for activity
         Toolbar toolbar = findViewById(R.id.toolbar);
         // Set as support action bar
