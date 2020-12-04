@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Covid19Case"></activity>
-        <activity android:name=".ProvinceDetailActivity"></activity>
+        <activity android:name=".MainActivityReceipe"></activity>
+        <activity android:name=".ReceipeDetail"></activity>
         <activity android:name=".MainMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

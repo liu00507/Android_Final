@@ -20,5 +20,12 @@ public class MainMenu extends AppCompatActivity {
             Toast.makeText(MainMenu.this, getResources().getString(R.string.covid_toast_message), Toast.LENGTH_LONG).show();
             startActivity(GoToCovidActivityIntent);
         });
+
+        Button goToReceipeBtn = findViewById(R.id.btn_to_RecipeSearch);
+        Intent GoToReceipeReceipeActivityIntent = new Intent(MainMenu.this, MainActivityReceipe.class);
+        goToReceipeBtn.setOnClickListener(click -> {
+           // Toast.makeText(MainMenu.this, getResources().getString(R.string.covid_toast_message), Toast.LENGTH_LONG).show();
+            startActivity(GoToReceipeReceipeActivityIntent);
+        });
     }
 }

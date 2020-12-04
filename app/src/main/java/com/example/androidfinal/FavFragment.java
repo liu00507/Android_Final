@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.androidfinal.ReceipeDetail;
 import com.example.androidfinal.ReceipeModel;
-import com.example.receipeSearch.R;
+import com.example.androidfinal.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

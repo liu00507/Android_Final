@@ -19,7 +19,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.receipeSearch.R;
+import com.example.androidfinal.R;
 import com.example.androidfinal.ReceipeDetail;
 import com.example.androidfinal.ReceipeModel;
 
