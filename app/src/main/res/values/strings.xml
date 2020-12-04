@@ -53,6 +53,7 @@
     <string name="buttonsave">Save</string>
     <string name="Edit_Text">Enter Receipe Name</string>
     <string name="Edit_Text1">Enter Ingredient Name</string>
+    <string name="receipe_toast_message">Receipe Search Activity\nWritten by: Huang Zheng Ver 1.0</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Favourites</string>

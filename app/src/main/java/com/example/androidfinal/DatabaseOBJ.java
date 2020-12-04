@@ -6,9 +6,7 @@ public class DatabaseOBJ {
     private long id;
 
     //constructor
-    public DatabaseOBJ()
-    {
-    }
+    public DatabaseOBJ() {}
 
     public DatabaseOBJ(String country, String date )
     {
