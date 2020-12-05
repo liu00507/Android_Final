@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ticketToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/ticket_activityTitle"
+        />
+
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/ticket_drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:openDrawer="start">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+        <ProgressBar
+            android:id="@+id/progress_horizontal"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/ticket_hello_message"/>
+
+        <EditText
+            android:id="@+id/cityText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/ticket_Hint"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/ticket_Radius"/>
+
+        <EditText
+            android:id="@+id/radiusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:inputType="text"/>
+
+
+            <Button
+                android:id="@+id/ticket_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ticket_Button"/>
+
+            <Button
+                android:id="@+id/ticket_collection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ticket_collectionButton"/>
+
+
+            <ListView
+                android:id="@+id/ticket_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </ListView>
+
+
+        </LinearLayout>
+
+
+
+        <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/ticket_menu"
+        android:id="@+id/ticket_nav_view"
+        />
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+
+
+
+
+
+</LinearLayout>

@@ -11,7 +11,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Covid19Case"></activity>
         <activity android:name=".ProvinceDetailActivity"></activity>
-        <activity android:name=".Covid19Case"></activity>
+        <activity android:name=".TicketDetail"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".TicketMaster"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".MainActivityReceipe"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>

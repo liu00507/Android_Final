@@ -26,5 +26,11 @@ public class MainMenu extends AppCompatActivity {
             Toast.makeText(MainMenu.this, getResources().getString(R.string.receipe_toast_message), Toast.LENGTH_LONG).show();
             startActivity(GoToReceipeReceipeActivityIntent);
         });
+
+        Intent gotoTicket =new Intent(MainMenu.this,TicketMaster.class);
+        Button goToTicketButton =findViewById(R.id.btn_to_TicketMaster);
+        goToTicketButton.setOnClickListener(click->{
+            startActivity(gotoTicket);
+        });
     }
 }

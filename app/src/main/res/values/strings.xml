@@ -57,4 +57,36 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Favourites</string>
+
+    <string name="ticket_hello_message">Enter city name here</string>
+
+    <string name="ticket_activityTitle">Search Ticket</string>
+
+    <string name="ticket_menu_home">Go back to Home page</string>
+
+    <string name="ticket_user_manual">User Manual</string>
+
+    <string name="ticket_menu_help">About us</string>
+
+    <string name="ticketopen">open</string>
+
+    <string name="ticketclose">close</string>
+
+    <string name="ticket_help_text">Help</string>
+
+    <string name="ticket_help_content">Please enter the city name, and a search radius for the events.The server will return a list of events scheduled in that city. </string>
+
+    <string name="ticket_detail_help_content">You can save the details of events by clink the Save button,and then go check it from the favourite button from the index page.</string>
+
+    <string name="ticket_yes">Yes</string>
+
+    <string name="ticket_detailActivityTitle">Ticket Detail</string>
+
+    <string name="ticket_Hint">Type city name here</string>
+
+    <string name="ticket_Radius">Type your Radius</string>
+
+    <string name="ticket_Button">SEARCH</string>
+
+    <string name="ticket_collectionButton">FAVOURITE</string>
 </resources>
