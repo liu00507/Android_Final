@@ -59,4 +59,36 @@
     <string name="menu_home">主界面</string>
     <string name="menu_gallery">已保存的菜谱</string>
 
+    <string name="ticket_hello_message">输入城市名称</string>
+
+    <string name="ticket_activityTitle">查寻票</string>
+
+    <string name="ticket_menu_home">回主页</string>
+
+    <string name="ticket_user_manual">用户说明</string>
+
+    <string name="ticket_menu_help">关于我们</string>
+
+    <string name="ticketopen">打开</string>
+
+    <string name="ticketclose">关闭</string>
+
+    <string name="ticket_help_text">帮助</string>
+
+    <string name="ticket_help_content">请输入用户名和半径，搜索票务</string>
+
+    <string name="ticket_detail_help_content">你可以保存喜欢的票，点击喜欢</string>
+
+    <string name="ticket_yes">是</string>
+
+    <string name="ticket_detailActivityTitle">票务细节</string>
+
+    <string name="ticket_Hint">请输入城市名称</string>
+
+    <string name="ticket_Radius">请输入半径</string>
+
+    <string name="ticket_Button">搜索</string>
+
+    <string name="ticket_collectionButton">喜爱</string>
+
 </resources>
