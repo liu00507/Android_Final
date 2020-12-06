@@ -150,7 +150,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             dataToPass.putString("CountryCode", province.getCountryCode());
             dataToPass.putString("Province", province.getProvince());
             dataToPass.putString("Cases", province.getCase());
-            dataToPass.putString("Date", province.getDate());
+            dataToPass.putString("Date", province.getDate().split("T")[0]);
             dataToPass.putString("Lat", province.getLatitude());
             dataToPass.putString("Lon", province.getLongitude());
 
