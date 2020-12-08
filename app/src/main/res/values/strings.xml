@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Android Final</string>
-    <string name="description">Android Group Project</string>
-    <string name="authors">Group x:Sam Liu, Zheng Huang, Chi Luo</string>
+    <string name="description">Android Group Final Project</string>
+    <string name="authors">Authors: Sam Liu, Zheng Huang, Chi Luo, Eric Cousineau</string>
     <!--Strings in activity_covid19_case.xml-->
     <string name="covid_toast_message">Covid-19 Case Data Activity\nWritten by: Sam Liu Ver 1.0</string>
     <string name="btn_to_TicketMaster">Ticket Master</string>

@@ -1,5 +1,7 @@
 package com.example.androidfinal;
-
+/*
+province object that contains essential data for province info
+ */
 public class Province {
 
     private long id;

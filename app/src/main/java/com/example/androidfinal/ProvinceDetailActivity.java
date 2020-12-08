@@ -22,15 +22,15 @@ public class ProvinceDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_province_detail);
         //get all the date from intent
-        Intent fromIntent = getIntent();
-        latitude = fromIntent.getStringExtra("Lat");
-        longitude = fromIntent.getStringExtra("Lon");
-        country = fromIntent.getStringExtra("Country");
-        provinceName = fromIntent.getStringExtra("Province");
-        countryCode = fromIntent.getStringExtra("CountryCode");
-        caseNumber = fromIntent.getStringExtra("Cases");
-        date = fromIntent.getStringExtra("Date");
-        id = fromIntent.getLongExtra("id", -1);
+        Intent Fromprevious = getIntent();
+        latitude = Fromprevious.getStringExtra("Lat");
+        longitude = Fromprevious.getStringExtra("Lon");
+        country = Fromprevious.getStringExtra("Country");
+        provinceName = Fromprevious.getStringExtra("Province");
+        countryCode = Fromprevious.getStringExtra("CountryCode");
+        caseNumber = Fromprevious.getStringExtra("Cases");
+        date = Fromprevious.getStringExtra("Date");
+        id = Fromprevious.getLongExtra("id", -1);
 
         //find all the views
         TextView countryTextView = findViewById(R.id.country_text_view);
