@@ -48,22 +48,17 @@ import android.view.MenuItem;
 
 public class Covid19Case extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
-
     private SharedPreferences prefs;
     public static final String ACTIVITY_NAME = "Covid19Case";
     private List<Province> provinceList = new ArrayList<>();
     private List<DatabaseOBJ> databaseList = new ArrayList<>();
-
     ListView provinceListView = null;
     ListView databaseListView = null;
-
     public static final String ITEM_SELECTED = "ITEM";
-
     private ProvinceListAdapter provinceListAdapter;
     private DatabaseListAdapter databaseListAdapter;
     SQLiteDatabase db;
     ProgressBar progressBar;
-
     Intent gotoProvinceDetail;
     CovidDetailsFragment dFragment;
 
@@ -77,46 +72,43 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
          */
         //This gets the toolbar from the layout:
         Toolbar tBar = (Toolbar)findViewById(R.id.covidToolBar);
-
         /*
-        put navigation view:
+        put navigation view with drawer layout:
          */
         DrawerLayout drawer = findViewById(R.id.covid_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
                 drawer, tBar, R.string.covidopen, R.string.covidclose);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);//this line avoids the icons to appear shaded gray
         navigationView.setNavigationItemSelectedListener(this);
 
         /*
-        save into query
+        shared preference to save last input
          */
         prefs = getSharedPreferences("searchArguments", Context.MODE_PRIVATE);
         String country = prefs.getString("country", "");
         String date = prefs.getString("date", "");
-
         EditText countryInput = findViewById(R.id.country_input);
         EditText dateInput = findViewById(R.id.date_input);
-
         countryInput.setText(country);
         dateInput.setText(date);
-
+        /*
+        set both listview adapters
+         */
         provinceListView = findViewById(R.id.province_list_view);
         provinceListView.setAdapter(provinceListAdapter = new ProvinceListAdapter());
         databaseListView = findViewById(R.id.database_list_view);
         databaseListView.setAdapter(databaseListAdapter = new DatabaseListAdapter());
 
-
         /*
-        province details
+        setup province details intent
          */
         gotoProvinceDetail = new Intent(Covid19Case.this, ProvinceDetailActivity.class);
 
         /*
-        add and display progress bar
+        add the progress bar
          */
         progressBar = findViewById(R.id.progress_horizontal);
         //function of search button
@@ -124,12 +116,14 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         searchBtn.setOnClickListener(click -> {
             String countryIn = countryInput.getText().toString();
             String dateIn = dateInput.getText().toString();
-                saveArguments(countryIn, dateIn);
-                AquireData(countryIn, dateIn);
-                provinceListAdapter.notifyDataSetChanged();
+            saveArguments(countryIn, dateIn);
+            AquireData(countryIn, dateIn);
+            provinceListAdapter.notifyDataSetChanged();
         });
 
-        //function of save button
+        /*
+           add action listener for the save botton
+         */
         Button saveBtn = findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(click -> {
             String message = null;
@@ -139,21 +133,24 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         });
 
         /*
-            display province details when select item from viewlist
+            display province details when shortclick item from listview and go into a new intent, here is also where i implemented
+            fragment
          */
         provinceListView.setOnItemClickListener((parent, view, position, id) -> {
             Province province = provinceList.get(position);
-
+            /*
+            data to pass to province detail
+             */
             dFragment = new CovidDetailsFragment();
             Bundle dataToPass = new Bundle();
             dataToPass.putString("Country", province.getCountry());
             dataToPass.putString("CountryCode", province.getCountryCode());
             dataToPass.putString("Province", province.getProvince());
             dataToPass.putString("Cases", province.getCase());
-            dataToPass.putString("Date", province.getDate());
+            dataToPass.putString("Date", province.getDate().split("T")[0]);
             dataToPass.putString("Lat", province.getLatitude());
             dataToPass.putString("Lon", province.getLongitude());
-
+            //tablet or phone
             if(isTablet)
             {
                 //add a CovidDetialsFragment
@@ -163,30 +160,38 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                         .replace(R.id.covidfragmentLocation, dFragment) //add fragment to frame layout
                         .commit(); //load the fragment
             }
-            else //is phone
+            else
             {
                 Intent nextActivity = new Intent(Covid19Case.this, ProvinceDetailActivity.class);
                 nextActivity.putExtras(dataToPass); //send data to next activity
                 startActivity(nextActivity); //make the transition
             }
         });
-
+        /*
+        read data from SQLite database
+         */
         databaseListView.setOnItemClickListener((parent, view, position, id) -> {
             getAllDataFromDatabase(databaseList.get(position));
         });
 
+        /*
+        long click listener to delete an item from database
+         */
         databaseListView.setOnItemLongClickListener((p,b,pos,id)->{
             AlertDialog.Builder alert=new AlertDialog.Builder(this);
             alert.setTitle("Do you want to delete this?").setMessage("The selected row is "+pos+" and The database id id: "+id)
                     .setPositiveButton("Yes",(click,arg)->{
-                        deleteMessage(databaseList.get(pos));
+                        deleteItem(databaseList.get(pos));
                         databaseList.remove(pos);
                         databaseListAdapter.notifyDataSetChanged();
                     }).setNegativeButton("No",(click,arg)->{}).create().show();
             return true;
         });
     }
-    protected void deleteMessage(DatabaseOBJ c)
+    /*
+    method to delete a item from database
+     */
+    protected void deleteItem(DatabaseOBJ c)
     {
         db.delete(MyOpener.TABLE_NAME, MyOpener.COL_COUNTRY + "=?" + " and "  +
                 MyOpener.COL_DATE + "=?", new String[] {c.getCountry(),c.getDate()});
@@ -200,7 +205,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
     }
 
     /*
-        parse and convert date
+       driver method for aquiring data from the url
      */
     private void AquireData(String country, String date) {
         provinceList.clear();
@@ -210,7 +215,9 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         provincesQuery.execute(url);
     }
 
-
+    /*
+        menu inflator method
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
@@ -219,7 +226,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         return true;
     }
 
-    //toolbar
+    //toolbar method for the top tool bar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String message = null;
@@ -241,10 +248,9 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                 alertDialogBuilder.setTitle(R.string.covid_help_text)
                         .setMessage(R.string.covid_help_content)
                         .setPositiveButton(R.string.covid_yes, (c, arg) -> {
-
                         })
                         .create().show();
-                message = "show user manual";
+                message = "Show Help";
                 break;
             case R.id.item4:
                 message = "Covid-19 case data By Sam Liu 040984702";
@@ -256,7 +262,7 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
     }
 
     /* Needed for
-     *the OnNavigationItemSelected interface
+     *the OnNavigationItemSelected interface for the left pop menu
      */
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -295,6 +301,32 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         Toast.makeText(this, "NavigationDrawer: " + message, Toast.LENGTH_LONG).show();
         return false;
     }
+
+    /*
+    print cursor debug function
+     */
+    private void printCursor(Cursor c, int version){
+        System.out.println("DB version: "+db.getVersion());
+        System.out.println("Total columns" + 	c.getColumnCount());
+        System.out.println("Column names are: "+c.getColumnName(0)+" "+c.getColumnName(1)+" "+c.getColumnName(2));
+        System.out.println("Total rows"+c.getCount());
+        Log.e(ACTIVITY_NAME,"DB version: "+db.getVersion());
+        Log.e(ACTIVITY_NAME,"Total columns: " + c.getColumnCount());
+        Log.e(ACTIVITY_NAME,"Column names are: "+c.getColumnName(0)+" "+c.getColumnName(1)+" "+c.getColumnName(2));
+        Log.e(ACTIVITY_NAME,"Total rows: "+c.getCount());
+        int MsgColumnIndex = c.getColumnIndex(MyOpener.COL_COUNTRY);
+        int TypeColIndex = c.getColumnIndex(MyOpener.COL_CASE);
+        int idColIndex = c.getColumnIndex(MyOpener.COL_ID);
+        while(c.moveToNext())
+        {
+            String message = c.getString(MsgColumnIndex);
+            int type = c.getInt(TypeColIndex);
+            long id = c.getLong(idColIndex);
+            Log.e(ACTIVITY_NAME,"Message: "+message);
+            Log.e(ACTIVITY_NAME,"Type: "+type);
+            Log.e(ACTIVITY_NAME,"Id: "+id);
+        }
+    }
     /*
      * save search result to database
      */
@@ -323,29 +355,9 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         }
 
     }
-
-    private void printCursor(Cursor c, int version){
-        System.out.println("DB version: "+db.getVersion());
-        System.out.println("Total columns" + 	c.getColumnCount());
-        System.out.println("Column names are: "+c.getColumnName(0)+" "+c.getColumnName(1)+" "+c.getColumnName(2));
-        System.out.println("Total rows"+c.getCount());
-        Log.e(ACTIVITY_NAME,"DB version: "+db.getVersion());
-        Log.e(ACTIVITY_NAME,"Total columns: " + c.getColumnCount());
-        Log.e(ACTIVITY_NAME,"Column names are: "+c.getColumnName(0)+" "+c.getColumnName(1)+" "+c.getColumnName(2));
-        Log.e(ACTIVITY_NAME,"Total rows: "+c.getCount());
-        int MsgColumnIndex = c.getColumnIndex(MyOpener.COL_COUNTRY);
-        int TypeColIndex = c.getColumnIndex(MyOpener.COL_CASE);
-        int idColIndex = c.getColumnIndex(MyOpener.COL_ID);
-        while(c.moveToNext())
-        {
-            String message = c.getString(MsgColumnIndex);
-            int type = c.getInt(TypeColIndex);
-            long id = c.getLong(idColIndex);
-            Log.e(ACTIVITY_NAME,"Message: "+message);
-            Log.e(ACTIVITY_NAME,"Type: "+type);
-            Log.e(ACTIVITY_NAME,"Id: "+id);
-        }
-    }
+    /*
+    method to query all the data from the database
+     */
     private void getAllDataFromDatabase(DatabaseOBJ database){
         provinceList.clear();
         MyOpener dbOpener = new MyOpener(this);
@@ -395,8 +407,10 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
         databaseListAdapter.notifyDataSetChanged();
 
     }
-
-     private class DatabaseListAdapter extends BaseAdapter
+    /*
+    database listview adapter method
+     */
+    private class DatabaseListAdapter extends BaseAdapter
     {
         @Override
         public int getCount() {
@@ -424,7 +438,9 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             return rowView;
         }
     }
-
+    /*
+    province listview adapter method
+     */
     private class ProvinceListAdapter extends BaseAdapter
     {
         @Override
@@ -449,14 +465,16 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
 
             //make a new row
             View rowView = inflater.inflate(R.layout.row_province_layout, parent, false);
-                TextView provinceView = rowView.findViewById(R.id.province_name_text_view);
-                provinceView.setText(province.getProvince());
-                TextView caseView = rowView.findViewById(R.id.province_case_text_view);
-                caseView.setText(province.getCase());
+            TextView provinceView = rowView.findViewById(R.id.province_name_text_view);
+            provinceView.setText(province.getProvince());
+            TextView caseView = rowView.findViewById(R.id.province_case_text_view);
+            caseView.setText(province.getCase());
             return rowView;
         }
     }
-
+    /*
+    method which is used to parse json from the web API
+     */
     private class ProvincesQuery extends AsyncTask<String, Integer, String>
     {
 
@@ -500,19 +518,19 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
                     provinceJSONObject = provinceJSONArray.getJSONObject(i);
                     Province province = new Province();
                     if(provinceJSONObject.getString("Province").equals("")){
-                        continue;
+                        continue;//the web api have this bug where a random column doesnt show anything. this to get rid it
                     }
                     else{
-                    province.setProvince(provinceJSONObject.getString("Province"));
-                    province.setCountry(provinceJSONObject.getString("Country"));
-                    province.setCase(provinceJSONObject.getString("Cases"));
-                    province.setCountryCode(provinceJSONObject.getString("CountryCode"));
-                    province.setDate(provinceJSONObject.getString("Date"));
-                    province.setLatitude(provinceJSONObject.getString("Lat"));
-                    province.setLongitude(provinceJSONObject.getString("Lon"));
-                    provinceResults.add(province);
-                    publishProgress(i * (100 / provinceJSONArray.length()));
-                    progressBar.setProgress(i * (100 / provinceJSONArray.length()));
+                        province.setProvince(provinceJSONObject.getString("Province"));
+                        province.setCountry(provinceJSONObject.getString("Country"));
+                        province.setCase(provinceJSONObject.getString("Cases"));
+                        province.setCountryCode(provinceJSONObject.getString("CountryCode"));
+                        province.setDate(provinceJSONObject.getString("Date"));
+                        province.setLatitude(provinceJSONObject.getString("Lat"));
+                        province.setLongitude(provinceJSONObject.getString("Lon"));
+                        provinceResults.add(province);
+                        publishProgress(i * (100 / provinceJSONArray.length()));
+                        progressBar.setProgress(i * (100 / provinceJSONArray.length()));
                     }
                 }
                 publishProgress(100);
@@ -532,7 +550,6 @@ public class Covid19Case extends AppCompatActivity implements NavigationView.OnN
             if (provinceList.size() == 0) {
                 Toast.makeText(Covid19Case.this, "No case returned.", Toast.LENGTH_LONG).show();
             }
-           // provinceListAdapter.notifyDataSetChanged();
         }
     }
 
