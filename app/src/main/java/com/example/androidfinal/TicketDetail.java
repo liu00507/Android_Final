@@ -52,10 +52,7 @@ public class TicketDetail extends AppCompatActivity implements NavigationView.On
     ProgressBar progressBar;
     SQLiteDatabase db3;
 
-    public static final String ITEM_SELECTED = "ITEM";
-    public static final String ITEM_POSITION = "POSITION";
-    public static final String ITEM_ID = "ID";
-    public static final String ITEM_IS_SAVE = "IS_SAVE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
