@@ -42,4 +42,10 @@
     <string name="covidtitle">Activity Title: Covid-19 Case Data</string>
     <string name="covidauthor">Author: Sam Liu</string>
     <string name="covidversion">Ver 1.0 </string>
+
+    <!-- AUDIO STRINGS START HERE -->
+    <string name="audioToolBar1">Album and Song Selection</string>
+    <string name="audioInputArtist">Enter artist name here</string>
+    <string name="audio_toast_message">Search for albums and songs</string>
+    <string name="audioBtnEnter">Enter artist</string>
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainMenu">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ToolBar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/audioToolBar1" />
+
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">-->
+
+        <TextView
+            android:id="@+id/audioTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35dp" />
+
+       <!-- <LinearLayout
+            android:id="@+id/audioInputTextSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">-->
+
+            <EditText
+                android:id="@+id/audioInputArtist"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/audioInputArtist"
+                />
+
+            <Button
+                android:id="@+id/audioBtnEnter"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/audioBtnEnter"/>
+
+            <ProgressBar
+                android:id="@+id/progress_horizontal"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/textViewEmptyCushion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"/>
+                <!--android:visibility="invisible"-->
+
+</LinearLayout>
